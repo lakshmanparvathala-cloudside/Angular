@@ -6,7 +6,7 @@ steps:
  - name: 'gcr.io/cloud-builders/docker'
    args: ["push", "asia.gcr.io/steam-potential-343206/myapp"]
 # deploy container image to GKE
-- name: "gcr.io/cloud-builders/gke-deploy"
+- name: "gcr.io/cloud-builders/kubectl"
   args:
   - run
   - --filename=kubernetes.yaml/
