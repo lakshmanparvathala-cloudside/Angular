@@ -1,5 +1,14 @@
 steps:
-- name: 'gcr.io/cloud-builders/docker'
-  args: [ 'build', '-t', 'asia.gcr.io/steam-potential-343206/myapp', '.' ]
-images:
-- 'asia.gcr.io/steam-potential-343206/myapp'\
+# Pull the existing image
+ - name: 'gcr.io/cloud-builders/docker'
+   entrypoint: 'bash'
+   args:
+    - '-c'
+    - |
+      docker pull asia.gcr.io/steam-potential-343206/myapp || exit 0
+# Build a docker image
+ - name: 'gcr.io/cloud-builders/docker'
+   args: [ 'build', '-t', 'asia.gcr.io/steam-potential-343206/myapp', '--cache-from', 'asia.gcr.io/steam-potential-343206/myapp', '.' ]
+# Push the docker image to container registry
+ - name: 'gcr.io/cloud-builders/docker'
+   args: ["push", "asia.gcr.io/steam-potential-343206/myapp"]
