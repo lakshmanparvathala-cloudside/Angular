@@ -1,14 +1,5 @@
 steps:
-# Pull the existing image
- - name: 'gcr.io/cloud-builders/docker'
-   entrypoint: 'bash'
-   args:
-    - '-c'
-    - |
-      docker pull gcr.io/$PROJECT_ID/tomcat:latest || exit 0
-# Build a docker image
- - name: 'gcr.io/cloud-builders/docker'
-   args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/tomcat', '--cache-from', 'gcr.io/$PROJECT_ID/tomcat', '.' ]
-# Push the docker image to container registry
- - name: 'gcr.io/cloud-builders/docker'
-   args: ["push", "gcr.io/$PROJECT_ID/tomcat"]
+- name: 'gcr.io/cloud-builders/docker'
+  args: [ 'build', '-t', 'asia.gcr.io/steam-potential-343206/myapp', '.' ]
+images:
+- 'asia.gcr.io/steam-potential-343206/myapp'\
