@@ -14,4 +14,4 @@ RUN ng build
 #Second Stage
 FROM httpd as server
 COPY --from=builder /Angular/dist/ /usr/local/apache2/htdocs/
-EXPOSE 20021
+EXPOSE 80
