@@ -1,10 +1,10 @@
 steps:
 # Build a docker image
  - name: 'gcr.io/cloud-builders/docker'
-   args: [ 'build', '-t', 'gcr.io/steam-potential-343206/myapp:$SHORT_SHA', '.' ]
+   args: [ 'build', '-t', 'gcr.io/steam-potential-343206/myapp:latest', '.' ]
 # Push the docker image to container registry
  - name: 'gcr.io/cloud-builders/docker'
-   args: ["push", "gcr.io/steam-potential-343206/myapp:$SHORT_SHA"]
+   args: ["push", "gcr.io/steam-potential-343206/myapp:latest"]
    # deploy container image to GKE
  - name: "gcr.io/cloud-builders/gke-deploy"
    args:
