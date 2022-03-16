@@ -1,7 +1,13 @@
 steps:
 # Build a docker image
  - name: 'gcr.io/cloud-builders/docker'
-   args: [ 'build', '-t', 'asia.gcr.io/steam-potential-343206/myapp', '.' ]
+   args: [ 'build', '-t', 'gcr.io/steam-potential-343206/myapp', '.' ]
 # Push the docker image to container registry
  - name: 'gcr.io/cloud-builders/docker'
-   args: ["push", "asia.gcr.io/steam-potential-343206/myapp"]
+   args: ["push", "gcr.io/steam-potential-343206/myapp"]
+ - name: 'gcr.io/cloud-builders/kubectl'
+   id: Deploy
+   args: ['apply' , '-f' , 'kubernetes.yam']
+   env:
+   - 'CLOUDSDK_COMPUTE_ZONE=asia-south1'
+   - 'CLOUDSDK_CONTAINER_CLUSTER=cluster'
