@@ -1,10 +1,10 @@
 steps:
 # Build a docker image
  - name: 'gcr.io/cloud-builders/docker'
-   args: [ 'build', '-t', 'gcr.io/steam-potential-343206/myapp:latest', '.' ]
+   args: [ 'build', '-t', 'gcr.io/steam-potential-343206/myapp', '.' ]
 # Push the docker image to container registry
  - name: 'gcr.io/cloud-builders/docker'
-   args: ["push", "gcr.io/steam-potential-343206/myapp:latest"]
+   args: ["push", "gcr.io/steam-potential-343206/myapp"]
    # deploy container image to GKE
  - name: 'gcr.io/cloud-builders/kubectl'
    id: Deploy
