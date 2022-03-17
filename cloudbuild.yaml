@@ -6,17 +6,10 @@ steps:
  - name: 'gcr.io/cloud-builders/docker'
    args: ["push", "gcr.io/steam-potential-343206/myapp:$SHORT_SHA"]
    # deploy container image to GKE
- - name: 'gcr.io/cloud-builders/git'
-   args: 
-     - '-c'
-     - >
-       set -x && sed '21d' kubernetes.yaml > kube.yaml && sed '3 i     - image: gcr.io/steam-potential-343206/myapp:lhjjjejwj' kube.yaml > kubernetes.yaml
- - name: 'gcr.io/cloud-builders/kubectl'
-   id: Deploy
+ - name: "gcr.io/cloud-builders/gke-deploy"
    args:
-   - 'apply'
-   - '-f'
-   - 'kubernetes.yaml'
-   env:
-   - 'CLOUDSDK_COMPUTE_REGION=asia-south1-c'
-   - 'CLOUDSDK_CONTAINER_CLUSTER=cluster'
+   - run
+   - --filename=kubernetes.yaml
+   - --image=gcr.io/steam-potential-343206/myapp:$SHORT_SHA
+   - --location=asia-south1-c
+   - --cluster=cluster
