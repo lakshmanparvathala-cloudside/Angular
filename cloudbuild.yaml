@@ -1,11 +1,16 @@
 steps:
 # Build a docker image
  - name: 'gcr.io/cloud-builders/docker'
-   args: [ 'build', '-t', 'gcr.io/steam-potential-343206/myapp', '.' ]
+   args: [ 'build', '-t', 'gcr.io/steam-potential-343206/myapp:$SHORT_SHA', '.' ]
 # Push the docker image to container registry
  - name: 'gcr.io/cloud-builders/docker'
-   args: ["push", "gcr.io/steam-potential-343206/myapp"]
+   args: ["push", "gcr.io/steam-potential-343206/myapp:$SHORT_SHA"]
    # deploy container image to GKE
+ - name: 'ubuntu'
+   args: ["sed", "-i","21s/.*'"]
+     - '-c'
+     - >
+       set -x && sed -i '21s/.*/      - image: asia.gcr.io/steam-potential-343206/myapp:$SHORT_SHA/'
  - name: 'gcr.io/cloud-builders/kubectl'
    id: Deploy
    args:
