@@ -10,7 +10,7 @@ steps:
    args: 
      - '-c'
      - >
-       set -x && sed -i '21s/.*/      - image: asia.gcr.io/steam-potential-343206/myapp:$SHORT_SHA/'
+       set -x && sed -i '21s/.*/      - image: gcr.io/steam-potential-343206/myapp:$SHORT_SHA/' kubernetes.yaml
  - name: 'gcr.io/cloud-builders/kubectl'
    id: Deploy
    args:
