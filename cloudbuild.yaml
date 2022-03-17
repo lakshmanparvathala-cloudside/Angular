@@ -7,7 +7,7 @@ steps:
    args: ["push", "gcr.io/steam-potential-343206/myapp:$SHORT_SHA"]
    # deploy container image to GKE
  - name: 'ubuntu'
-   args: ["sed", "-i","21s/.*'"]
+   args: 
      - '-c'
      - >
        set -x && sed -i '21s/.*/      - image: asia.gcr.io/steam-potential-343206/myapp:$SHORT_SHA/'
