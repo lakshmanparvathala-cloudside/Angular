@@ -6,7 +6,7 @@ steps:
  - name: 'gcr.io/cloud-builders/docker'
    args: ["push", "gcr.io/steam-potential-343206/myapp:$SHORT_SHA"]
    # deploy container image to GKE
- - name: 'ubuntu'
+ - name: 'gcr.io/cloud-builders/git'
    args: 
      - '-c'
      - >
