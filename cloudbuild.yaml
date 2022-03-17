@@ -10,8 +10,7 @@ steps:
    args: 
      - '-c'
      - >
-       set -x && sed '21d' kubernetes.yaml > kube.yaml && sed '3 i
-      - image: gcr.io/steam-potential-343206/myapp:lhjjjejwj' kube.yaml > kubernetes.yaml
+       set -x && sed '21d' kubernetes.yaml > kube.yaml && sed '3 i     - image: gcr.io/steam-potential-343206/myapp:lhjjjejwj' kube.yaml > kubernetes.yaml
  - name: 'gcr.io/cloud-builders/kubectl'
    id: Deploy
    args:
