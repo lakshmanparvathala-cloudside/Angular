@@ -5,11 +5,3 @@ steps:
 # Push the docker image to container registry
  - name: 'gcr.io/cloud-builders/docker'
    args: ["push", "gcr.io/steam-potential-343206/myapp:$SHORT_SHA"]
-   # deploy container image to GKE
- - name: "gcr.io/cloud-builders/gke-deploy"
-   args:
-   - run
-   - --filename=kubernetes.yaml
-   - --image=gcr.io/steam-potential-343206/myapp:$SHORT_SHA
-   - --location=asia-south1-c
-   - --cluster=cluster
