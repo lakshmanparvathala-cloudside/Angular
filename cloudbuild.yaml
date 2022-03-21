@@ -1,7 +1,48 @@
 steps:
-# Build a docker image
- - name: 'gcr.io/cloud-builders/docker'
-   args: [ 'build', '-t', 'gcr.io/steam-potential-343206/myapp:$SHORT_SHA', '.' ]
-# Push the docker image to container registry
- - name: 'gcr.io/cloud-builders/docker'
-   args: ["push", "gcr.io/steam-potential-343206/myapp:$SHORT_SHA"]
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - '-t'
+      - 'gcr.io/$PROJECT_ID/$TRIGGER_NAME:$SHORT_SHA'
+      - .
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - push
+      - 'gcr.io/$PROJECT_ID/$TRIGGER_NAME:$SHORT_SHA'
+  - name: gcr.io/cloud-builders/git
+    args:
+      - '-c'
+      - |
+        cp ssh /root/.ssh/id_rsa
+        chmod 400 /root/.ssh/id_rsa
+    entrypoint: bash
+    volumes:
+      - name: ssh
+        path: /root/.ssh
+  - name: gcr.io/cloud-builders/git
+    args:
+      - '-c'
+      - >
+        set -x &&   export GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null
+        -o StrictHostKeyChecking=no" &&
+
+        git clone --branch=main --recurse-submodules ${_DEPLOY_SSH_REPO}
+    entrypoint: /bin/bash
+    volumes:
+      - name: ssh
+        path: /root/.ssh
+  - name: gcr.io/cloud-builders/git
+    args:
+      - '-c'
+      - >
+        set -x && export GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o
+        StrictHostKeyChecking=no" && git config --global user.email "ci@ci.com"
+        && cd env && sed -i '21s/.*/      - image:
+        gcr.io\/steam-potential-343206\/$TRIGGER_NAME:$SHORT_SHA/'
+        kubernetes.yaml && git pull && git commit -am "Publish new version
+        $COMMIT_SHA" && git push || echo "no changes"
+    id: update to deploy repo
+    entrypoint: /bin/sh
+    volumes:
+      - name: ssh
+        path: /root/.ssh
